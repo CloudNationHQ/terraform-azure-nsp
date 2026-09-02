@@ -1,4 +1,5 @@
-variable "config" {
+variable "perimeter" {
+  description = "contains all network security perimeter configuration"
   type = object({
     name                = string
     resource_group_name = optional(string)
@@ -23,20 +24,14 @@ variable "config" {
   })
 
   validation {
-    condition     = var.config.location != null || var.location != null
-    error_message = "location must be provided either in the config object or as a separate variable."
+    condition     = lookup(var.perimeter, "location", null) != null || var.location != null
+    error_message = "location must be set on var.perimeter.location or on the module-level var.location."
   }
 
   validation {
-    condition     = var.config.resource_group_name != null || var.resource_group_name != null
-    error_message = "resource group name must be provided either in the config object or as a separate variable."
+    condition     = lookup(var.perimeter, "resource_group_name", null) != null || var.resource_group_name != null
+    error_message = "resource_group_name must be set on var.perimeter.resource_group_name or on the module-level var.resource_group_name."
   }
-}
-
-variable "naming" {
-  description = "contains naming convention"
-  type        = map(string)
-  default     = {}
 }
 
 variable "location" {

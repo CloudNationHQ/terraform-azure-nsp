@@ -1,35 +1,33 @@
+# network security perimeter
 resource "azurerm_network_security_perimeter" "this" {
   resource_group_name = coalesce(
-    lookup(
-      var.config, "resource_group_name", null
-    ), var.resource_group_name
+    var.perimeter.resource_group_name, var.resource_group_name
   )
 
   location = coalesce(
-    lookup(var.config, "location", null
-    ), var.location
+    var.perimeter.location, var.location
   )
 
   tags = coalesce(
-    var.config.tags, var.tags
+    var.perimeter.tags, var.tags
   )
 
-  name = var.config.name
+  name = var.perimeter.name
 }
 
+# profiles
 resource "azurerm_network_security_perimeter_profile" "this" {
-  for_each = lookup(
-    var.config, "profiles", {}
-  )
+  for_each = var.perimeter.profiles
 
   name                          = coalesce(each.value.name, each.key)
   network_security_perimeter_id = azurerm_network_security_perimeter.this.id
 }
 
+# access rules
 resource "azurerm_network_security_perimeter_access_rule" "this" {
   for_each = merge([
-    for profiles_key, profiles in lookup(var.config, "profiles", {}) : {
-      for rules_key, rules in lookup(profiles, "access_rules", {}) :
+    for profiles_key, profiles in var.perimeter.profiles : {
+      for rules_key, rules in profiles.access_rules :
       "${profiles_key}.${rules_key}" => merge(rules, { profiles_key = profiles_key })
     }
   ]...)
@@ -46,10 +44,11 @@ resource "azurerm_network_security_perimeter_access_rule" "this" {
   subscription_ids                      = each.value.subscription_ids
 }
 
+# associations
 resource "azurerm_network_security_perimeter_association" "this" {
   for_each = merge([
-    for profiles_key, profiles in lookup(var.config, "profiles", {}) : {
-      for associations_key, associations in lookup(profiles, "associations", {}) :
+    for profiles_key, profiles in var.perimeter.profiles : {
+      for associations_key, associations in profiles.associations :
       "${profiles_key}.${associations_key}" => merge(associations, { profiles_key = profiles_key })
     }
   ]...)

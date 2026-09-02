@@ -7,7 +7,7 @@ module "naming" {
 
 module "rg" {
   source  = "cloudnationhq/rg/azure"
-  version = "~> 2.0"
+  version = "~> 3.0"
 
   groups = {
     demo = {
@@ -19,7 +19,7 @@ module "rg" {
 
 module "storage" {
   source  = "cloudnationhq/sa/azure"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   storage = {
     name                = module.naming.storage_account.name_unique
@@ -31,7 +31,7 @@ module "storage" {
 module "network_security_perimeter" {
   source = "../../"
 
-  config = {
+  perimeter = {
     name                = "nsp-demo-dev"
     location            = module.rg.groups.demo.location
     resource_group_name = module.rg.groups.demo.name

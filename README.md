@@ -19,13 +19,13 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.0)
 
-- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 4.0)
+- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 5.0)
 
 ## Providers
 
 The following providers are used by this module:
 
-- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~> 4.0)
+- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~> 5.0)
 
 ## Resources
 
@@ -40,9 +40,9 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### <a name="input_config"></a> [config](#input\_config)
+### <a name="input_perimeter"></a> [perimeter](#input\_perimeter)
 
-Description: n/a
+Description: contains all network security perimeter configuration
 
 Type:
 
@@ -83,14 +83,6 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_naming"></a> [naming](#input\_naming)
-
-Description: contains naming convention
-
-Type: `map(string)`
-
-Default: `{}`
-
 ### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
 
 Description: default resource group to be used.
@@ -111,7 +103,7 @@ Default: `{}`
 
 The following outputs are exported:
 
-### <a name="output_network_security_perimeter"></a> [network\_security\_perimeter](#output\_network\_security\_perimeter)
+### <a name="output_perimeter"></a> [perimeter](#output\_perimeter)
 
 Description: contains all exported attributes of the network security perimeter
 
