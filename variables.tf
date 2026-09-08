@@ -1,4 +1,4 @@
-variable "config" {
+variable "network_security_perimeter" {
   type = object({
     name                = string
     resource_group_name = optional(string)
@@ -23,21 +23,16 @@ variable "config" {
   })
 
   validation {
-    condition     = var.config.location != null || var.location != null
+    condition     = var.network_security_perimeter.location != null || var.location != null
     error_message = "location must be provided either in the config object or as a separate variable."
   }
 
   validation {
-    condition     = var.config.resource_group_name != null || var.resource_group_name != null
+    condition     = var.network_security_perimeter.resource_group_name != null || var.resource_group_name != null
     error_message = "resource group name must be provided either in the config object or as a separate variable."
   }
 }
 
-variable "naming" {
-  description = "contains naming convention"
-  type        = map(string)
-  default     = {}
-}
 
 variable "location" {
   description = "default azure region to be used."
