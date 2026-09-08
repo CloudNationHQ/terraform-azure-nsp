@@ -141,4 +141,3 @@ MIT Licensed. See [LICENSE](https://github.com/cloudnationhq/terraform-azure-nsp
 ## References
 
 - [Documentation](https://learn.microsoft.com/en-us/azure/private-link/network-security-perimeter-concepts)
-- [Rest Api](https://learn.microsoft.com/en-us/rest/api/networkperimeter/)
